@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ast.h"
+#include <stdbool.h>
 
 /* -----------------------------------------------------------------------
  * (E) ast_count_nodes — conta o número total de nós da AST
@@ -72,9 +73,29 @@ int ast_count_nodes(const ast_node_t *node)
  * ----------------------------------------------------------------------- */
 int ast_count_leaves(const ast_node_t *node)
 {
-    /* TODO-F: implementar */
-    (void)node;  /* evita warning de parâmetro não usado — remova ao implementar */
-    return 0;
+    if (node == NULL)
+        return 0;
+
+    int count = 0;
+    bool is_leaf = true;
+
+    /* Percorre todos os filhos */
+    for (int i = 0; i < AST_MAX_CHILDREN; i++)
+        if (node->children[i] != NULL) {
+            is_leaf = false;
+            count += ast_count_leaves(node->children[i]);
+        }
+
+    /* Contagem recursiva via 'next' */
+    if (node->next != NULL) {
+        is_leaf = false;
+        count += ast_count_leaves(node->next);
+    }
+
+    if (is_leaf)
+        count += 1;
+
+    return count;
 }
 
 /* -----------------------------------------------------------------------

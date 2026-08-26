@@ -132,7 +132,7 @@ A regra `expr_list_ne` aceita apenas um argumento.
 A função não percorre o encadeamento via `next`, contando menos nós do que o correto.
 **Tarefa:** descomentar/adicionar a chamada recursiva `count += ast_count_nodes(node->next)`.
 
-### TODO-F — `ast_count_leaves` (`ast_walk.c`)
+### (DONE) TODO-F — `ast_count_leaves` (`ast_walk.c`)
 
 A função retorna sempre 0.
 **Tarefa:** implementar do zero. Um nó é "folha" quando todos os `children[]` e `next` são `NULL`.

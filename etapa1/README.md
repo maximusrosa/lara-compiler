@@ -103,19 +103,19 @@ Código de saída: **0** = sucesso, **1** = erro.
 
 O código contém **7 pontos incompletos** marcados com `TODO`. São as tarefas que você deve resolver:
 
-### TODO-A — Espaço em branco com tab (`scanner.l`)
+### (DONE) TODO-A — Espaço em branco com tab (`scanner.l`)
 
 A regra `[ \n]+` ignora apenas espaço e newline.
 **Tarefa:** estender para também ignorar `\t` (tabulação) e `\r` (retorno de carro).
 **Dica:** use uma classe de caracteres `[ \n\t\r]`.
 
-### TODO-B — Float com expoente (`scanner.l`)
+### (DONE) TODO-B — Float com expoente (`scanner.l`)
 
 A definição `FLOAT` aceita apenas `3.14` mas não `1.5e10` ou `2.3E-4`.
 **Tarefa:** estender o regex para aceitar notação científica opcional: `(e|E)(+|-)?{DIGIT}+`
 **Dica:** use `?` para tornar o expoente opcional; agrupe com parênteses.
 
-### TODO-C — Operadores `&&` e `||` (`parser.y`)
+### (DONE) TODO-C — Operadores `&&` e `||` (`parser.y`)
 
 As ações semânticas dos operadores lógicos retornam `NULL` em vez de criar um nó AST.
 **Tarefa:** preencher as chamadas a `ast_new(AST_EXPR_BINARY, "&&", ...)` e `ast_new(..., "||", ...)`.

@@ -57,7 +57,7 @@ int ast_count_nodes(const ast_node_t *node)
         count += ast_count_nodes(node->children[i]);
 
     /* TODO-E: adicione aqui a contagem recursiva via 'next' */
-    /* count += ast_count_nodes(node->next); */  /* <-- descomente e ajuste */
+    count += ast_count_nodes(node->next);
 
     return count;
 }

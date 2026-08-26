@@ -2,7 +2,7 @@
 
 **Disciplina:** INF01083 — Linguagens de Programação II / Compiladores
 **Semestre:** 2026/2
-**Professor:** Leandro Krug Wives 
+**Professor:** Leandro Krug Wives
 **Lab Etapa 1:** quarta-feira, 26 de agosto de 2026
 **Grupos:** 2–3 alunos
 
@@ -12,14 +12,14 @@
 
 LARA é um subconjunto de C com variações sintáticas introduzidas para fins didáticos.
 
-| Construção       | C padrão               | LARA                           |
-|------------------|------------------------|-------------------------------|
-| Declaração var.  | `int x = 5;`           | `let x := 5;`                 |
-| Declaração array | `int v[10];`           | `array 10 of int v;`          |
-| Cabeçalho função | `int f(int a) { }`     | `fun int f(int a) { }`        |
-| Atribuição       | `x = expr;`            | `x := expr;`                  |
-| Laço while       | `while (c) { }`        | `while (c) do { }`            |
-| Literais bool    | `1` / `0`              | `true` / `false`              |
+| Construção       | C padrão           | LARA                   |
+| ---------------- | ------------------ | ---------------------- |
+| Declaração var.  | `int x = 5;`       | `let x := 5;`          |
+| Declaração array | `int v[10];`       | `array 10 of int v;`   |
+| Cabeçalho função | `int f(int a) { }` | `fun int f(int a) { }` |
+| Atribuição       | `x = expr;`        | `x := expr;`           |
+| Laço while       | `while (c) { }`    | `while (c) do { }`     |
+| Literais bool    | `1` / `0`          | `true` / `false`       |
 
 Tipos disponíveis: `int`, `float`, `bool`, `char`, `void`.
 
@@ -127,7 +127,7 @@ A regra `expr_list_ne` aceita apenas um argumento.
 **Tarefa:** adicionar a regra `expr_list_ne ',' expr` usando `ast_append()` para encadear.
 **Siga** o padrão de `param_list_ne` já implementado.
 
-### TODO-E — `ast_count_nodes` com `next` (`ast_walk.c`)
+### (DONE) TODO-E — `ast_count_nodes` com `next` (`ast_walk.c`)
 
 A função não percorre o encadeamento via `next`, contando menos nós do que o correto.
 **Tarefa:** descomentar/adicionar a chamada recursiva `count += ast_count_nodes(node->next)`.
@@ -177,7 +177,7 @@ echo $?                                       # verifica código de saída
 ## Critérios de Avaliação da Etapa 1
 
 | Critério                                   | Peso |
-|--------------------------------------------|------|
+| ------------------------------------------ | ---- |
 | TODO-A: espaço branco com tab (`\t`, `\r`) | 10%  |
 | TODO-B: float com expoente (`1.5e10`)      | 15%  |
 | TODO-C: operadores lógicos `&&` e `\|\|`   | 15%  |

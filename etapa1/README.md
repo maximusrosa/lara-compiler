@@ -121,7 +121,7 @@ As ações semânticas dos operadores lógicos retornam `NULL` em vez de criar u
 **Tarefa:** preencher as chamadas a `ast_new(AST_EXPR_BINARY, "&&", ...)` e `ast_new(..., "||", ...)`.
 **Siga** o padrão dos operadores relacionais (`<`, `>`, etc.) já implementados.
 
-### TODO-D — Lista de argumentos com vírgula (`parser.y`)
+### (DONE) TODO-D — Lista de argumentos com vírgula (`parser.y`)
 
 A regra `expr_list_ne` aceita apenas um argumento.
 **Tarefa:** adicionar a regra `expr_list_ne ',' expr` usando `ast_append()` para encadear.

@@ -264,7 +264,24 @@ void codegen_stmt(codegen_ctx_t *ctx, ast_node_t *stmt)
         case AST_ASSIGN: {
             if (strcmp(stmt->value, ":=") == 0) {
                 /* TODO-E2-D: implemente aqui */
-                fprintf(stderr, "[CODEGEN] TODO-E2-D: atribuição não implementada ainda.\n");
+                switch (stmt->children[0]->type) {
+                    case AST_SYMBOL: {
+                        char *rval = codegen_expr(ctx, stmt->children[1]);
+                        codegen_emit(ctx, TAC_COPY, stmt->children[0]->value, rval, NULL);
+                        free(rval);
+                        break;
+                    }
+                    case AST_EXPR_INDEX: {
+                        char *idx = codegen_expr(ctx, stmt->children[0]->children[0]);
+                        char *rval = codegen_expr(ctx, stmt->children[1]);
+                        codegen_emit(ctx, TAC_STORE, stmt->children[0]->value, idx, rval);
+                        free(idx);
+                        free(rval);
+                        break;
+                    }
+                    default:
+                        fprintf(stderr, "[CODEGEN] Atribuição: esperava AST_SYMBOL ou AST_EXPR_INDEX, recebido %d\n", stmt->children[0]->type);
+                }
             } else if (strcmp(stmt->value, "+=") == 0) {
                 /* compound assignment += */
                 char *lname = stmt->children[0]->value;
@@ -407,10 +424,7 @@ char *codegen_expr(codegen_ctx_t *ctx, ast_node_t *expr)
              * (placeholder). Substitua pela emissão correta.
              */
             if (op != TAC_NOP) {
-                /* TODO-E2-B e TODO-E2-C: substitua a linha abaixo */
-                codegen_emit(ctx, TAC_NOP, tmp, left, right);
-                /* pela linha correta: */
-                /* codegen_emit(ctx, op, tmp, left, right); */
+                codegen_emit(ctx, op, tmp, left, right);
             } else {
                 fprintf(stderr, "[CODEGEN] Operador desconhecido: '%s'\n", expr->value);
                 codegen_emit(ctx, TAC_NOP, tmp, left, right);

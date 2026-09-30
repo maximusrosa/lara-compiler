@@ -34,8 +34,6 @@ etapa2/
 │   ├── codegen.h                 — interface do gerador (completo)
 │   ├── codegen.c                 — gerador de código (ESQUELETO — completar)
 │   └── main.c                    — ponto de entrada (completo)
-├── solution/                     — gabarito e gerador dinâmico de testes (apenas professor)
-│   └── codegen_solution.c        — solução completa de referência
 └── tests/
     ├── valid/                    — programas LARA válidos (01 e 02 com .expected para sanity check)
     ├── invalid/                  — programas inválidos (devem ser rejeitados)

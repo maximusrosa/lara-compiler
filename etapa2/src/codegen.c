@@ -128,12 +128,39 @@ void codegen_program(codegen_ctx_t *ctx, ast_node_t *program)
      *       O tipo base está em decl->children[0]->value.
      */
 
+     int global_offset = 0;
+
     /* Código parcial fornecido como exemplo — processa apenas funções */
     while (decl) {
         if (decl->type == AST_FUN_DECL) {
             codegen_fun(ctx, decl);
         }
+
         /* TODO-E2-A: adicione tratamento para AST_VAR_DECL e AST_ARRAY_DECL */
+        if (decl->type == AST_VAR_DECL) {
+            sym_entry_t *e = symtab_lookup(ctx->symtab, decl->value);
+            if (e) {
+                int size = type_size(e->datatype);
+                char size_str[16];
+                snprintf(size_str, sizeof(size_str), "%d", size);
+
+                e->offset = global_offset;
+                codegen_emit(ctx, TAC_DECL_GLOBAL, decl->value, size_str, NULL);
+                global_offset += size;
+            }
+        } else if (decl->type == AST_ARRAY_DECL) {
+            sym_entry_t *e = symtab_lookup(ctx->symtab, decl->value);
+            if (e) {
+                int size = type_size(e->datatype) * e->array_size;
+                char size_str[16];
+                snprintf(size_str, sizeof(size_str), "%d", size);
+
+                e->offset = global_offset;
+                codegen_emit(ctx, TAC_DECL_GLOBAL, decl->value, size_str, NULL);
+                global_offset += size;
+            }
+        }
+
         decl = decl->next;
     }
 }

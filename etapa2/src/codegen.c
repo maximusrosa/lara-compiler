@@ -145,6 +145,7 @@ void codegen_program(codegen_ctx_t *ctx, ast_node_t *program)
                 snprintf(size_str, sizeof(size_str), "%d", size);
 
                 e->offset = global_offset;
+                e->scope = SYM_SCOPE_GLOBAL;
                 codegen_emit(ctx, TAC_DECL_GLOBAL, decl->value, size_str, NULL);
                 global_offset += size;
             }
@@ -156,6 +157,7 @@ void codegen_program(codegen_ctx_t *ctx, ast_node_t *program)
                 snprintf(size_str, sizeof(size_str), "%d", size);
 
                 e->offset = global_offset;
+                e->scope = SYM_SCOPE_GLOBAL;
                 codegen_emit(ctx, TAC_DECL_GLOBAL, decl->value, size_str, NULL);
                 global_offset += size;
             }

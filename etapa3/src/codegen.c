@@ -35,13 +35,8 @@
  * ----------------------------------------------------------------------- */
 static int type_size(sym_datatype_t dt)
 {
-    switch (dt) {
-        case SYM_TYPE_INT:   return 4;
-        case SYM_TYPE_FLOAT: return 8;
-        case SYM_TYPE_CHAR:  return 1;
-        case SYM_TYPE_BOOL:  return 1;
-        default:             return 4;
-    }
+    (void)dt;
+    return 8;
 }
 
 static tac_op_t op_to_tac(const char *op)
@@ -143,24 +138,29 @@ void codegen_fun(codegen_ctx_t *ctx, ast_node_t *fun_decl)
     codegen_emit(ctx, TAC_BEGINFUNC, fname, NULL, NULL);
 
     ast_node_t *param = fun_decl->children[1];
-    int param_offset = -4;
+    int param_offset = -8;
     while (param) {
         if (param->type == AST_PARAM && param->value) {
             sym_entry_t *e = symtab_lookup(ctx->symtab, param->value);
             if (e) {
                 e->scope  = SYM_SCOPE_LOCAL;
                 e->offset = param_offset;
+                char offset_str[16];
+                snprintf(offset_str, sizeof(offset_str), "%d", -param_offset - 8);
+                codegen_emit(ctx, TAC_DECL_LOCAL, param->value, offset_str, NULL);
                 param_offset -= type_size(e->datatype);
             }
         }
         param = param->next;
     }
+    ctx->local_offset = -param_offset - 8;
 
     ast_node_t *body = fun_decl->children[2];
     if (body && body->type == AST_BLOCK) {
         ast_node_t *stmt = body->children[0];
         while (stmt) { codegen_stmt(ctx, stmt); stmt = stmt->next; }
     }
+    codegen_emit(ctx, TAC_RETURN_VOID, NULL, NULL, NULL);
     codegen_emit(ctx, TAC_ENDFUNC, fname, NULL, NULL);
 }
 
